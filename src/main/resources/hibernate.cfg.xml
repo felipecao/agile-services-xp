@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <mapping class="br.com.petrobras.srgd.entity.ApuracaoAnexo"/>
+        <mapping class="br.com.petrobras.srgd.entity.ApuracaoRgd"/>
+        <mapping class="br.com.petrobras.srgd.entity.Aviso"/>
+        <mapping class="br.com.petrobras.srgd.entity.DadoReferencia"/>
+        <mapping class="br.com.petrobras.srgd.entity.DesconformidadeRgd"/>
+        <mapping class="br.com.petrobras.srgd.entity.DesconformidadeAnexo"/>
+        <mapping class="br.com.petrobras.srgd.entity.FormaDeteccao"/>
+        <mapping class="br.com.petrobras.srgd.entity.Orgao"/>
+        <mapping class="br.com.petrobras.srgd.entity.Ptc"/>
+        <mapping class="br.com.petrobras.srgd.entity.RegiaoGeografica"/>
+        <mapping class="br.com.petrobras.srgd.entity.Rgd"/>
+        <mapping class="br.com.petrobras.srgd.entity.UnidadeMedida"/>
+        <mapping class="br.com.petrobras.srgd.entity.Usuario"/>
+        <mapping class="br.com.petrobras.srgd.entity.ValorReferencia"/>
+        <mapping class="br.com.petrobras.srgd.entity.RgdPtc"/>
+        <mapping class="br.com.petrobras.srgd.entity.Anexo"/>
+        <mapping class="br.com.petrobras.srgd.entity.Prazo"/>
+        <mapping class="br.com.petrobras.srgd.entity.CausaOcorrencia"/>
+        <mapping class="br.com.petrobras.srgd.entity.RgdOrgao"/>
+        <mapping class="br.com.petrobras.srgd.entity.Bloqueio"/>
+        <mapping class="br.com.petrobras.srgd.entity.Log"/>
+        <mapping class="br.com.petrobras.srgd.entity.PtcOrgao"/>
+        <mapping class="br.com.petrobras.srgd.entity.AnexoDesconformidade"/>
+        <mapping class="br.com.petrobras.srgd.entity.AnexoDesconformidadePtc"/>
+        <mapping class="br.com.petrobras.srgd.entity.AnexoImpacto"/>
+        <mapping class="br.com.petrobras.srgd.entity.OcorrenciaImpacto"/>
+        <mapping class="br.com.petrobras.srgd.entity.Cliente"/>
+        <mapping class="br.com.petrobras.srgd.entity.ArquivoAnexo"/>
+        <mapping class="br.com.petrobras.srgd.entity.ArquivoRgd"/>
+    </session-factory>
+</hibernate-configuration>

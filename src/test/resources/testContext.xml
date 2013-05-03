@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <bean id="rgdObserverModel" class="br.com.petrobras.srgd.presentation.controller.observer.core.RgdObserver">
+        <property name="usuarioFacade" ref="usuarioFacade" />
+    </bean>
+
+    <bean id="settings" class="br.com.petrobras.srgd.util.core.ApplicationSettings">
+        <property name="codigoAplicacao" value="srgd" />
+        <property name="codigoAplicacaoCa" value="um5p" />
+    </bean>
+
+    <bean id="rgdDto" class="br.com.petrobras.srgd.common.dto.RgdDto"/>
+
+    <bean id="crudFacade"
+          class="br.com.petrobras.srgd.business.facade.core.CrudFacade">
+        <property name="formaDeteccaoService" ref="formaDeteccaoService" />
+        <property name="ptcService" ref="ptcService" />
+        <property name="causaOcorrenciaService" ref="causaOcorrenciaService" />
+        <property name="regiaoGeograficaService" ref="regiaoGeograficaService" />
+        <property name="rgdService" ref="rgdService" />
+        <property name="orgaoService" ref="orgaoService" />
+        <property name="logService" ref="logService" />
+        <property name="prazoService" ref="prazoService" />
+        <property name="dadoReferenciaService" ref="dadoReferenciaService" />
+        <property name="unidadeMedidaService" ref="unidadeMedidaService" />  
+        <property name="valorReferenciaService" ref="valorReferenciaService" />
+        <property name="ptcOrgaoService" ref="ptcOrgaoService" />
+        <property name="ocorrenciaImpactoService" ref="ocorrenciaImpactoService" />
+        <property name="clienteService" ref="clienteService" />
+        </bean>
+
+    <bean id="rgdFacade"
+		class="br.com.petrobras.srgd.business.facade.core.RgdFacade">
+        <property name="apuracaoService" ref="apuracaoService" />
+        <property name="valorReferenciaService" ref="valorReferenciaService" />
+        <property name="rgdService" ref="rgdService" />
+        <property name="ptcService" ref="ptcService" />
+        <property name="rgdPtcService" ref="rgdPtcService" />
+        <property name="avisoService" ref="avisoService" />
+        <property name="desconformidadeService" ref="desconformidadeService" />
+        <property name="formaDeteccaoService" ref="formaDeteccaoService" />
+        <property name="logService" ref="logService" />
+        <property name="usuarioService" ref="usuarioService" />
+        <property name="orgaoService" ref="orgaoService" />
+        <property name="rgdObserver" ref="rgdObserverModel" />
+        <property name="anexoImpactoService" ref="anexoImpactoService" />
+        <property name="anexoDesconformidadeService" ref="anexoDesconformidadeService" />
+        <property name="regiaoGeograficaService" ref="regiaoGeograficaService" />
+        <property name="ocorrenciaImpactoService" ref="ocorrenciaImpactoService" />
+        <property name="bloqueioService" ref="bloqueioService" />        
+        <property name="dadoReferenciaService" ref="dadoReferenciaService" />  
+        <property name="rgdOrgaoService" ref="rgdOrgaoService" />  
+    </bean>
+
+    <bean id="usuarioFacade"
+   		class="br.com.petrobras.srgd.business.facade.core.UsuarioFacade">
+        <property name="usuarioService" ref="usuarioService" />
+        <property name="orgaoService" ref="orgaoService" />
+    </bean>
+
+    <bean id="anexoFacade"
+		class="br.com.petrobras.srgd.business.facade.core.AnexoFacade">
+         <property name="prazoService" ref="prazoService"/>
+         <property name="anexoDesconformidadeService" ref="anexoDesconformidadeService"/>
+         <property name="anexoDesconformidadePtcService" ref="anexoDesconformidadePtcService"/>
+         <property name="apuracaoAnexoService" ref="apuracaoAnexoService"/>
+         <property name="desconformidadeAnexoService" ref="desconformidadeAnexoService"/>
+         <property name="clienteService" ref="clienteService" />
+         <property name="ocorrenciaImpactoService" ref="ocorrenciaImpactoService" />
+         <property name="anexoImpactoService" ref="anexoImpactoService" />
+         <property name="anexoService" ref="anexoService" />
+         <property name="ptcService" ref="ptcService" />
+         <property name="crudFacade" ref="crudFacade" />
+         <property name="usuarioFacade" ref="usuarioFacade" />
+    </bean>
+    
+    <bean id="notificacaoService" 
+          class="br.com.petrobras.srgd.business.service.crud.core.NotificacaoService" >
+        <property name="usuarioService" ref="usuarioService"/>
+        <property name="orgaoService" ref="orgaoService" />
+        <property name="correioService" ref="correioService" />
+        <property name="logService" ref="logService" />
+    </bean>
+    
+    <bean id="prazoCommand" 
+        class="br.com.petrobras.srgd.business.command.PrazoCommand" abstract="true">
+        <property name="rgdService" ref="rgdService" />
+        <property name="prazoService" ref="prazoService"/>
+        <property name="usuarioService" ref="usuarioService"/>
+        <property name="notificacaoService" ref="notificacaoService"/>
+    </bean>    
+
+    <bean id="transicaoEstadoCommand" 
+        class="br.com.petrobras.srgd.business.command.TransicaoEstadoCommand" abstract="true">
+        <property name="anexoDesconformidadeService" ref="anexoDesconformidadeService" />
+        <property name="anexoImpactoService" ref="anexoImpactoService" />
+        <property name="rgdService" ref="rgdService" />
+        <property name="usuarioService" ref="usuarioService"/>
+        <property name="prazoService" ref="prazoService"/>
+        <property name="notificacaoService" ref="notificacaoService"/>
+    </bean>
+
+    <bean id="aprovarRgdCaraterInicialCommand"
+          class="br.com.petrobras.srgd.business.command.core.AprovarRgdCaraterInicialCommand" parent="transicaoEstadoCommand" scope="prototype">
+    </bean>
+    
+    <bean id="liberarRgdCommand"
+          class="br.com.petrobras.srgd.business.command.core.LiberarRgdCommand" parent="transicaoEstadoCommand" scope="prototype">
+    </bean>
+    
+    <bean id="liberarAnexoDesconformidadeCommand"
+          class="br.com.petrobras.srgd.business.command.core.LiberarAnexoDesconformidadeCommand" parent="transicaoEstadoCommand" scope="prototype">
+    </bean>   
+
+    <bean id="liberarAnexoImpactoCommand"
+		class="br.com.petrobras.srgd.business.command.core.LiberarAnexoImpactoCommand" parent="transicaoEstadoCommand" 
+		scope="prototype" />
+    
+    <bean id="workflowFacade"
+          class="br.com.petrobras.srgd.business.facade.core.WorkflowFacade">
+        <property name="rgdFacade" ref="rgdFacade" />
+        <property name="liberarRgdCommand" ref="liberarRgdCommand" />
+        <property name="aprovarRgdCaraterInicialCommand" ref="aprovarRgdCaraterInicialCommand" />
+        <property name="liberarAnexoDesconformidadeCommand" ref="liberarAnexoDesconformidadeCommand" />
+        <property name="aprovarAnexoDesconformidadeCommand" ref="aprovarAnexoDesconformidadeCommand" />
+        <property name="aprovarAnexoImpactoCommand" ref="aprovarAnexoImpactoCommand" />
+        <property name="liberarAnexoImpactoCommand" ref="liberarAnexoImpactoCommand" />
+        <property name="enviarAnexosAprovacaoAsyncCommand" ref="enviarAnexosAprovacaoAsyncCommand" />
+        <property name="reprovarRgdCommand" ref="reprovarRgdCommand" />
+        <property name="elegerAnexosCommand" ref="elegerAnexosCommand" />
+        <property name="aprovarRgdCaraterFinalCommand" ref="aprovarRgdCaraterFinalCommand" />        
+    </bean>
+
+    <bean id="aprovarAnexoDesconformidadeCommand"
+		class="br.com.petrobras.srgd.business.command.core.AprovarAnexoDesconformidadeCommand" parent="transicaoEstadoCommand" scope="prototype">
+		<property name="anexoDesconformidadeService" ref="anexoDesconformidadeService" />
+    </bean>
+
+    <bean id="aprovarAnexoImpactoCommand"
+		class="br.com.petrobras.srgd.business.command.core.AprovarAnexoImpactoCommand" parent="transicaoEstadoCommand" scope="prototype">
+    </bean>
+
+    <bean id="elegerAnexosCommand"
+		class="br.com.petrobras.srgd.business.command.core.ElegerAnexosCommand" 
+		parent="transicaoEstadoCommand" scope="prototype" />	
+		
+    <bean id="aprovarRgdCaraterFinalCommand"
+		class="br.com.petrobras.srgd.business.command.core.AprovarRgdCaraterFinalCommand" 
+		parent="transicaoEstadoCommand" scope="prototype" />	
+		
+    <bean id="asyncCommand" 
+        class="br.com.petrobras.srgd.business.command.AsyncCommand" 
+        abstract="true">
+        <property name="rgdService" ref="rgdService" />
+        <property name="prazoService" ref="prazoService" />
+        <property name="anexoService" ref="anexoService" />
+        <property name="usuarioService" ref="usuarioService"/>
+        <property name="notificacaoService" ref="notificacaoService"/>
+    </bean>
+
+    <bean id="enviarAnexosAprovacaoAsyncCommand"
+        class="br.com.petrobras.srgd.business.command.async.core.EnviarAnexosAprovacaoAsyncCommand" 
+        parent="asyncCommand" 
+        scope="prototype" />
+
+    <bean id="CobradorAprovacaoFinalAsyncCommand"
+        class="br.com.petrobras.srgd.business.command.async.core.CobradorAprovacaoFinalAsyncCommand"
+        parent="asyncCommand"
+        scope="prototype" />
+
+    <bean id="reprovarRgdCommand"
+		class="br.com.petrobras.srgd.business.command.core.ReprovarRgdCommand" 
+		parent="transicaoEstadoCommand" scope="prototype"/>  
+		
+    <bean id="avisoService"
+          class="br.com.petrobras.srgd.business.service.crud.core.AvisoService">
+        <property name="dao" ref="avisoDao" />
+    </bean>
+
+    <bean id="apuracaoService"
+          class="br.com.petrobras.srgd.business.service.crud.core.ApuracaoService">
+        <property name="dao" ref="apuracaoDao" />
+    </bean>
+
+    <bean id="desconformidadeService"
+          class="br.com.petrobras.srgd.business.service.crud.core.DesconformidadeService">
+        <property name="dao" ref="desconformidadeDao" />
+    </bean>
+
+<!--    <bean id="usuarioService"-->
+<!--          class="br.com.petrobras.srgd.business.service.crud.core.UsuarioService">-->
+<!--        <property name="dao" ref="usuarioDao" />-->
+<!--        <property name="userDao" ref="userDao" />-->
+<!--    </bean>-->
+    
+    <!-- Mock usuarioService - o uso do mock eh necessario para recuperar o usuario logado -->
+    <bean id="usuarioService" class="org.mockito.Mockito" factory-method="mock" >
+        <constructor-arg value="br.com.petrobras.srgd.business.service.crud.core.UsuarioService" />
+    </bean>
+    
+
+    <bean id="rgdService"
+          class="br.com.petrobras.srgd.business.service.crud.core.RgdService">
+        <property name="dao" ref="rgdDao" />
+    </bean>
+
+    <bean id="ptcService"
+          class="br.com.petrobras.srgd.business.service.crud.core.PtcService">
+        <property name="dao" ref="ptcDao" />
+    </bean>
+
+    <bean id="regiaoGeograficaService"
+          class="br.com.petrobras.srgd.business.service.crud.core.RegiaoGeograficaService">
+        <property name="dao" ref="regiaoGeograficaDao" />
+    </bean>
+
+    <bean id="rgdOrgaoService"
+          class="br.com.petrobras.srgd.business.service.crud.core.RgdOrgaoService">
+        <property name="dao" ref="rgdOrgaoDao" />
+    </bean>
+    
+    <bean id="orgaoService"
+          class="br.com.petrobras.srgd.business.service.crud.core.OrgaoService">
+        <property name="dao" ref="orgaoDao" />
+    </bean>
+
+    <bean id="valorReferenciaService"
+          class="br.com.petrobras.srgd.business.service.crud.core.ValorReferenciaService">
+        <property name="dao" ref="valorReferenciaDao" />
+    </bean>
+
+    <bean id="unidadeMedidaService"
+          class="br.com.petrobras.srgd.business.service.crud.core.UnidadeMedidaService">
+        <property name="dao" ref="unidadeMedidaDao" />
+    </bean>
+
+    <bean id="formaDeteccaoService"
+          class="br.com.petrobras.srgd.business.service.crud.core.FormaDeteccaoService">
+        <property name="dao" ref="formaDeteccaoDao" />
+    </bean>
+
+    <bean id="rgdPtcService"
+          class="br.com.petrobras.srgd.business.service.crud.core.RgdPtcService">
+        <property name="dao" ref="rgdPtcDao" />
+    </bean>
+    
+    <bean id="ptcOrgaoService"
+		class="br.com.petrobras.srgd.business.service.crud.core.PtcOrgaoService">
+		<property name="dao" ref="ptcOrgaoDao" />
+    </bean>
+
+    <bean id="dadoReferenciaService"
+          class="br.com.petrobras.srgd.business.service.crud.core.DadoReferenciaService">
+        <property name="dao" ref="dadoReferenciaDao" />
+    </bean>
+
+    <bean id="rgdPrcService"
+          class="br.com.petrobras.srgd.business.service.crud.core.RgdPtcService">
+        <property name="dao" ref="rgdPtcDao" />
+    </bean>
+
+    <bean id="prazoService"
+          class="br.com.petrobras.srgd.business.service.crud.core.PrazoService">
+        <property name="dao" ref="prazoDao" />
+    </bean>
+
+    <bean id="correioService"
+          class="br.com.petrobras.srgd.business.service.crud.core.CorreioService">
+        <property name="applicationSettings" ref="settings" />
+    </bean>
+
+    <bean id="causaOcorrenciaService"
+          class="br.com.petrobras.srgd.business.service.crud.core.CausaOcorrenciaService">
+        <property name="dao" ref="causaOcorrenciaDao" />
+    </bean>
+
+    <bean id="bloqueioService"
+		class="br.com.petrobras.srgd.business.service.crud.core.BloqueioService">
+        <property name="dao" ref="bloqueioDao" />
+    </bean>
+    
+    <bean id="logService"
+		class="br.com.petrobras.srgd.business.service.crud.core.LogService">
+        <property name="dao" ref="logDao" />
+    </bean>
+
+    <bean id="anexoDesconformidadeService"
+		class="br.com.petrobras.srgd.business.service.crud.core.AnexoDesconformidadeService">
+        <property name="dao" ref="anexoDesconformidadeDao" />
+    </bean>
+
+    <bean id="anexoDesconformidadePtcService"
+		class="br.com.petrobras.srgd.business.service.crud.core.AnexoDesconformidadePtcService">
+        <property name="dao" ref="anexoDesconformidadePtcDao" />
+    </bean>
+
+    <bean id="apuracaoAnexoService"
+		class="br.com.petrobras.srgd.business.service.crud.core.ApuracaoAnexoService">
+        <property name="dao" ref="apuracaoAnexoDao" />
+    </bean>
+
+    <bean id="desconformidadeAnexoService"
+		class="br.com.petrobras.srgd.business.service.crud.core.DesconformidadeAnexoService">
+        <property name="dao" ref="desconformidadeAnexoDao" />
+    </bean>
+
+    <bean id="clienteService"
+		class="br.com.petrobras.srgd.business.service.crud.core.ClienteService">
+        <property name="dao" ref="clienteDao" />
+    </bean>
+
+    <bean id="ocorrenciaImpactoService"
+		class="br.com.petrobras.srgd.business.service.crud.core.OcorrenciaImpactoService">
+        <property name="dao" ref="ocorrenciaImpactoDao" />
+    </bean>
+
+    <bean id="anexoImpactoService"
+		class="br.com.petrobras.srgd.business.service.crud.core.AnexoImpactoService">
+        <property name="dao" ref="anexoImpactoDao" />
+    </bean>
+
+    <bean id="anexoService"
+		class="br.com.petrobras.srgd.business.service.crud.core.AnexoService">
+        <property name="dao" ref="anexoDao" />
+    </bean>
+    
+        
+    <!--<bean id="userDao" class="br.com.petrobras.cda.security.core.ControleAcessoDaoFactory" factory-method="getUserDao" />-->
+    
+    <bean id="userDao" class="org.mockito.Mockito" factory-method="mock" >
+        <constructor-arg value="br.com.petrobras.cda.security.IUserDao" />
+    </bean>
+    
+
+    <bean id="avisoDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.AvisoDao" parent="abstractParentDao" />
+
+    <bean id="apuracaoDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.ApuracaoDao" parent="abstractParentDao" />
+
+    <bean id="desconformidadeDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.DesconformidadeDao" parent="abstractParentDao" />
+
+    <bean id="usuarioDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.UsuarioDao" parent="abstractParentDao" />
+
+	<bean id="rgdDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.RgdDao"
+		parent="abstractParentDao" >
+		<property name="rgdDaoBehaviour" ref="rgdDaoBehaviour"/>
+	</bean>
+
+    <bean id="ptcDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.PtcDao" parent="abstractParentDao">
+    	<property name="ptcDaoBehaviour" ref="ptcDaoBehaviour"/>
+   	</bean>
+
+    <bean id="regiaoGeograficaDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.RegiaoGeograficaDao" parent="abstractParentDao" />
+
+    <bean id="orgaoDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.OrgaoDao" parent="abstractParentDao" />
+
+    <bean id="valorReferenciaDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.ValorReferenciaDao" parent="abstractParentDao" />
+
+    <bean id="dadoReferenciaDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.DadoReferenciaDao" parent="abstractParentDao" />
+
+    <bean id="prazoDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.PrazoDao" parent="abstractParentDao" />
+
+    <bean id="causaOcorrenciaDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.CausaOcorrenciaDao" parent="abstractParentDao" />
+
+    <bean id="bloqueioDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.BloqueioDao" parent="abstractParentDao" />
+
+    <bean id="anexoDesconformidadeDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.AnexoDesconformidadeDao" parent="abstractParentDao" />
+    
+    <bean id="clienteDao" class="br.com.petrobras.srgd.persistence.dao.hibernate.ClienteDao" parent="abstractParentDao" />
+
+    <bean id="rgdOrgaoDao"
+		class="br.com.petrobras.framework.support.persistence.dao.CoreDao"
+		parent="abstractParentDao">
+		<constructor-arg>
+			<value>br.com.petrobras.srgd.entity.RgdOrgao</value>
+		</constructor-arg>
+	</bean>
+
+    <bean id="unidadeMedidaDao"
+		class="br.com.petrobras.framework.support.persistence.dao.CoreDao"
+		parent="abstractParentDao">
+		<constructor-arg>
+			<value>br.com.petrobras.srgd.entity.UnidadeMedida</value>
+		</constructor-arg>
+	</bean>
+
+    <bean id="rgdPtcDao"
+		class="br.com.petrobras.framework.support.persistence.dao.CoreDao"
+		parent="abstractParentDao">
+		<constructor-arg>
+			<value>br.com.petrobras.srgd.entity.RgdPtc</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="ptcOrgaoDao"
+		class="br.com.petrobras.framework.support.persistence.dao.CoreDao"
+		parent="abstractParentDao">
+		<constructor-arg>
+			<value>br.com.petrobras.srgd.entity.PtcOrgao</value>
+		</constructor-arg>
+	</bean>
+
+    <bean id="logDao"
+		class="br.com.petrobras.framework.support.persistence.dao.CoreDao"
+		parent="abstractParentDao">
+		<constructor-arg>
+			<value>br.com.petrobras.srgd.entity.Log</value>
+		</constructor-arg>
+	</bean>
+
+    <bean id="formaDeteccaoDao"
+		class="br.com.petrobras.framework.support.persistence.dao.CoreDao"
+		parent="abstractParentDao">
+		<constructor-arg>
+			<value>br.com.petrobras.srgd.entity.FormaDeteccao</value>
+		</constructor-arg>
+	</bean>
+
+    <bean id="desconformidadeAnexoDao"
+		class="br.com.petrobras.framework.support.persistence.dao.CoreDao"
+		parent="abstractParentDao">
+		<constructor-arg>
+			<value>br.com.petrobras.srgd.entity.DesconformidadeAnexo</value>
+		</constructor-arg>
+	</bean>
+
+    <bean id="apuracaoAnexoDao"
+		class="br.com.petrobras.framework.support.persistence.dao.CoreDao"
+		parent="abstractParentDao">
+		<constructor-arg>
+			<value>br.com.petrobras.srgd.entity.ApuracaoAnexo</value>
+		</constructor-arg>
+	</bean>
+
+    <bean id="anexoDesconformidadePtcDao"
+		class="br.com.petrobras.framework.support.persistence.dao.CoreDao"
+		parent="abstractParentDao">
+		<constructor-arg>
+			<value>br.com.petrobras.srgd.entity.AnexoDesconformidadePtc</value>
+		</constructor-arg>
+	</bean>
+		
+    <bean id="ocorrenciaImpactoDao"
+		class="br.com.petrobras.srgd.persistence.dao.hibernate.OcorrenciaImpactoDao"
+		parent="abstractParentDao">
+	</bean>
+
+    <bean id="anexoImpactoDao"
+		class="br.com.petrobras.srgd.persistence.dao.hibernate.AnexoImpactoDao"
+		parent="abstractParentDao" />
+
+    <bean id="anexoDao"
+		class="br.com.petrobras.srgd.persistence.dao.hibernate.AnexoDao"
+		parent="abstractParentDao" />
+
+    <bean id="daoBehaviour"
+          class="br.com.petrobras.framework.support.persistence.dao.hibernate.ConfigurableDaoBehaviour">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+	<bean id="rgdDaoBehaviour"
+		class="br.com.petrobras.srgd.persistence.dao.hibernate.RgdDaoBehaviour">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="ptcDaoBehaviour"
+		class="br.com.petrobras.srgd.persistence.dao.hibernate.PtcDaoBehaviour">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+    <bean id="abstractParentDao" abstract="true">
+        <property name="daoBehaviour" ref="daoBehaviour" />
+    </bean>
+
+    <bean id="dataSource" class="org.unitils.database.UnitilsDataSourceFactoryBean" />
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation">
+            <!--
+                  Mapeamento das classes são carregadas deste arquivo externo no padrão do Hibernate
+                  Foi feito assim para que pudessemos aproveitar o mesmo arquivo para depurar HQL's
+                  no Hibernate Tools
+             -->
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+                <!-- <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop-->
+                <prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.connection.release_mode">after_transaction</prop>
+                <prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

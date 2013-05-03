@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- See also
+         http://logback.qos.ch/manual/appenders.html#RollingFileAppender
+    -->
+<!--    <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <File>d:/projetos/logs/srgd/srgd-test.log</File>-->
+<!--        <layout class="ch.qos.logback.classic.PatternLayout">-->
+<!--            <Pattern>%d %p [%c] - %m%n</Pattern>-->
+<!--        </layout>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+<!--            <maxIndex>3</maxIndex>-->
+<!--            <FileNamePattern>d:/projetos/logs/srgd/srgd-test.log.%i</FileNamePattern>-->
+<!--        </rollingPolicy>-->
+<!--        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+<!--            <MaxFileSize>1024KB</MaxFileSize>-->
+<!--        </triggeringPolicy>-->
+<!--    </appender>-->
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d %p [%c] - %m%n</Pattern>
+        </layout>
+    </appender>
+
+    <!-- Hibernate Loggers -->
+    <logger name="br.com.petrobras">
+        <level value="DEBUG" />
+    </logger>
+    
+    <logger name="org.hibernate">
+        <level value="INFO" />
+    </logger>
+    
+    <logger name="org.unitils">
+        <level value="INFO" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="stdout" />
+    </root>
+</configuration>
