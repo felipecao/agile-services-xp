@@ -2,10 +2,7 @@ package br.unirio.felipecao.services.contractor.dao.impl;
 
 import br.unirio.felipecao.services.contractor.dao.IContractorDao;
 import br.unirio.felipecao.services.entity.Contractor;
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

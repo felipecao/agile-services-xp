@@ -5,10 +5,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
 
-
-    <bean id="contractorDao" class="br.unirio.felipecao.services.contractor.dao.impl.ContractorDao">
+    <bean id="abstractParentDao" abstract="true">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+
+    <bean id="contractorDao" class="br.unirio.felipecao.services.contractor.dao.impl.ContractorDao" parent="abstractParentDao"/>
 
     <bean id="agilexpDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
